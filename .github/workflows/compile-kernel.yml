@@ -76,7 +76,7 @@ on:
         type: choice
         options:
           - -ophub
-          - -yourname
+          - -geekv
 
 env:
   TZ: America/New_York
