@@ -21,7 +21,7 @@ on:
       kernel_version:
         description: "Select kernel version"
         required: false
-        default: "5.4.y"
+        default: "6.12.y"
         type: choice
         options:
           - 5.4.y
@@ -62,12 +62,13 @@ on:
       kernel_toolchain:
         description: "Select the compilation toolchain"
         required: false
-        default: "gcc"
+        default: "gcc-14.2"
         type: choice
         options:
           - clang
           - gcc
           - gcc-14.2
+          - gcc-14.3
       compress_format:
         description: "Set the initrd compression format"
         required: false
@@ -81,11 +82,11 @@ on:
       kernel_sign:
         description: "Set the kernel custom signature"
         required: false
-        default: "-ophub"
+        default: "-geekv"
         type: choice
         options:
           - -ophub
-          - -yourname
+          - -geekv
 
 env:
   TZ: America/New_York
@@ -146,12 +147,12 @@ jobs:
         run: |
           df -hT ${PWD}
           mkdir -p /builder/{kernel,output}
-          ln -sf /builder/kernel /home/runner/work/_actions/ophub/amlogic-s9xxx-armbian/main/compile-kernel/kernel
-          ln -sf /builder/output /home/runner/work/_actions/ophub/amlogic-s9xxx-armbian/main/compile-kernel/output
+          ln -sf /builder/kernel /home/runner/work/_actions/Geekvcn/amlogic-s9xxx-armbian/my/compile-kernel/kernel
+          ln -sf /builder/output /home/runner/work/_actions/Geekvcn/amlogic-s9xxx-armbian/my/compile-kernel/output
           echo "status=success" >> ${GITHUB_OUTPUT}
 
       - name: Compile the kernel [ ${{ inputs.kernel_version }} ]
-        uses: ophub/amlogic-s9xxx-armbian@main
+        uses: Geekvcn/amlogic-s9xxx-armbian@my
         if: ${{ steps.mapped.outputs.status }} == 'success' && !cancelled()
         with:
           build_target: kernel
